@@ -1,0 +1,139 @@
+.table tbody tr td {
+    font-size: 11px;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.custom-margin-top {
+    margin-top: 10px;
+    max-height: 100px;
+    height: 100px;
+}
+
+.custom-bg {
+    background-color: #f5f5f5;
+    padding: 3px 10px;
+}
+.custom-bg-dark {
+    background-color: #c3c3c3;
+    padding: 3px 10px;
+}
+
+.custom-border {
+    border: #ddd 1px solid
+}
+.custom-border-left {
+    border-left: #ddd 1px solid
+}
+.custom-border-bottom {
+    border-bottom: #ddd 1px solid
+}
+.custom-border-top {
+    border-top: #ddd 1px solid
+}
+.custom-border-right {
+    border-right: #ddd 1px solid
+}
+
+.padding20px {
+    padding: 20px
+}
+
+.pre-scrollable {
+    max-height: 100px !important
+}
+
+.greentext {
+    color: darkgreen; 
+    font-weight: bold ;
+}
+
+.redtext {
+    color: red; 
+    font-weight: bold ;
+}
+
+.exchange{
+    font-style: italic;
+    font-weight: bold;
+    color: #999
+}
+
+.totals{
+    text-overflow: ellipsis; font-weight: bold; white-space: nowrap; overflow: hidden;
+}
+
+.greenbg{
+    background-color: darkseagreen;
+}
+
+.redbg{
+    background-color: lightcoral;
+}
+
+.orangebg{
+    background-color: orange;
+}
+
+.bluebg{
+    background-color: lightblue;
+}
+
+.yellowbg{
+    background-color: yellow;
+}
+
+.intbg{
+    -webkit-animation: animatedbg 1s infinite;  /* Safari 4+ */
+    -moz-animation: animatedbg 1s infinite;  /* Fx 5+ */
+    -o-animation: animatedbg 1s infinite;  /* Opera 12+ */
+    animation: animatedbg 1s infinite;  /* IE 10+, Fx 29+ */
+}
+
+@keyframes animatedbg {
+    0%, 49% {
+      background-color: #c0c0c0
+    }
+    50%, 100% {
+      background-color: #cbcbcb
+    }
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.input-error {
+    border: 2px solid red !important;
+}
+
+.coinprofit-table {
+    margin-top: 25px;
+}
+
+.coinprofit-table td {
+    text-align: center;
+    font-size: 16px !important;
+}
+
+.coinprofit-table th {
+    text-align: center;
+}
+
+#reset-coin-profit {
+    float: right;
+}
+
+#caption-coin-profit {
+    vertical-align: middle;
+    position: relative;
+    top: 4px;
+}

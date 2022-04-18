@@ -1,0 +1,125 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Transactions</title>
+        <meta name="description" content="Markets diff">
+        <meta name="author" content="Midas">
+
+        <link rel="stylesheet" href="css/style.css?v=1.0">
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/open-iconic.min.css" rel="stylesheet">
+        <link href="css/open-iconic-bootstrap.css" rel="stylesheet">
+
+        <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-default" id="playpause">
+                                <span class="oi oi-media-pause"></span>
+                                <font>Playing</font>
+                            </button>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="markusdt" onclick="markusdt()">
+                                        <label class="form-check-label" for="markusdt">&nbsp; Mark USDT</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="markbtc" onclick="markbtc()">
+                                        <label class="form-check-label" for="markbtc">&nbsp; Mark BTC</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-md-offset-2">
+                            <p style="text-align:center;"><strong>Order By</strong></p>
+                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default order" id="volume-hitbtc">Volume HitBTC</button>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default order" id="volume-bittrex">Volume Bittrex</button>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default order" id="profit">Profit</button>
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="hideZero" /> Hide zero profit
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-1"><strong>Pair</strong></div>
+                        <div class="col-md-4">
+                            <div class="row" style="text-align: center;">
+                                <strong>Bitfinex</strong>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"><i><u>Ask</u></i></div>
+                                <div class="col-md-4"><i><u>Bid</u></i></div>
+                                <div class="col-md-4"><i><u>Volume</u></i></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row" style="text-align: center;">
+                                <strong>Bittrex</strong>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"><i><u>Ask</u></i></div>
+                                <div class="col-md-4"><i><u>Bid</u></i></div>
+                                <div class="col-md-4"><i><u>Volume</u></i></div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"><strong>Profit</strong></div>
+                        <div class="col-md-2"><strong>Transfer coin cost</strong></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="container">
+
+                </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/autobahn.min.js"></script>
+        <script>
+            if (!Date.now) Date.now = function() { return new Date().getTime(); }
+            var script = document.createElement('script');
+            script.src = "js/marketsbittrexbitfinex.js?v" + Date.now();
+            document.head.appendChild(script);
+        </script>
+    </body>
+</html>

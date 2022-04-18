@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Market Watcher watches crypto market fluctuation">
+        <meta name="author" content="Mixed Reality">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/market_watcher.css" />
+        <link rel="stylesheet" href="css/dojichart.min.css">
+        <title>Indice</title>
+        <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="container-fluid">
+            <hr class="my-2">
+            <div class="text-center alert alert-secondary">
+                <h2 class="text-center">Indice</h2>
+                <fieldset class="text-center">
+                    <legend><u>Explicatii:</u></legend>
+                    <p><strong>Pretul indicelui</strong> este o medie ponderata al pretului paritatilor. | <strong>Candlesticks</strong> sunt calculate pentru intervale de 5 min</p>
+                </fieldset>
+            </div>
+            <hr class="my-2">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="table-responsive-md table-container">
+                        <table class="table table-bordered">
+                            <thead class="table-active">
+                                <tr class="table-info">
+                                    <th>Paritate</th>
+                                    <th>Pondere</th>
+                                    <th>Raport</th>
+                                    <th>Pret</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr>
+                                    <td class="alert alert-danger">BTC USDT</td>
+                                    <td>0,48</td>
+                                    <td>0,0214942825208495</td>
+                                    <td id="BTCUSDT" class="alert alert-danger" style="font-weight: bold"></td>
+                                </tr>
+                                <tr>
+                                    <td class="alert alert-warning">ETH USDT</td>
+                                    <td>0,3</td>
+                                    <td>0,297619047619048</td>
+                                    <td id="ETHUSDT"  class="alert alert-warning" style="font-weight: bold"></td>
+                                </tr>
+                                <tr>
+                                    <td class="alert alert-success">SOL USDT</td>
+                                    <td>0,16</td>
+                                    <td>7,75915580384854</td>
+                                    <td id="SOLUSDT"  class="alert alert-success" style="font-weight: bold"></td>
+                                </tr>
+                                <tr>
+                                    <td class="alert alert-primary">DOGE USDT</td>
+                                    <td>0,06</td>
+                                    <td>7052,18617771509</td>
+                                    <td id="DOGEUSDT" class="alert alert-primary" style="font-weight: bold"></td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                    <table class="table table-bordered">
+                        <thead class="table-active">
+                            <tr class="table-info">
+                                <th>Pret Indice</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td id="indice" style="font-weight: bold"></td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>
+                <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                    <fieldset class="text-center">
+                        <legend><u>Candlesticks</u></legend>
+                    </fieldset>
+                    <div class="dojichart" id="mychart">
+                        <div class="region" data-name="price"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            
+            <hr class="my-2">
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/2.1.2/jquery.floatThead.min.js"></script>
+        <script src="js/autobahn.min.js"></script>
+        <script type="text/javascript" src="js/dojichart.min.js"></script>
+        <script>
+            if (!Date.now) Date.now = function() { return new Date().getTime(); }
+            var script = document.createElement('script');
+            script.src = "js/market_watcher.js?v=" + Date.now();
+            document.head.appendChild(script);
+        </script>
+    </body>
+</html>

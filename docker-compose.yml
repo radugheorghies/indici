@@ -1,0 +1,75 @@
+version: "3.8"
+
+services:
+  crawler:
+    build:
+      context: .
+      dockerfile: Dockerfile.crawler
+    networks:
+      - app
+
+
+  wampserver:
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile.wampserver
+    ports:
+      - "8087:8087"
+    networks:
+      - app
+
+  # nats-1:
+  #   command:
+  #     - "--debug"
+  #     - "--cluster"
+  #     - "nats://0.0.0.0:6222"
+  #     - "--http_port"
+  #     - "8222"
+  #     - "--port"
+  #     - "4222"
+  #   image: "nats:latest"
+  #   networks:
+  #     - app
+  #   ports:
+  #     - "14222:4222"
+  #     - "18222:8222"
+  # nats-2:
+  #   command:
+  #     - "--debug"
+  #     - "--cluster"
+  #     - "nats://0.0.0.0:6222"
+  #     - "--http_port"
+  #     - "8222"
+  #     - "--port"
+  #     - "4222"
+  #     - "--routes"
+  #     - "nats://nats-1:6222"
+  #   image: "nats:latest"
+  #   networks:
+  #     - app
+  #   ports:
+  #     - "24222:4222"
+  #     - "28222:8222"
+  # nats-3:
+  #   command:
+  #     - "--debug"
+  #     - "--cluster"
+  #     - "nats://0.0.0.0:6222"
+  #     - "--http_port"
+  #     - "8222"
+  #     - "--port"
+  #     - "4222"
+  #     - "--routes"
+  #     - "nats://nats-1:6222"
+  #   image: "nats:latest"
+  #   networks:
+  #     - app
+  #   ports:
+  #     - "34222:4222"
+  #     - "38222:8222"
+
+networks:
+  app:
+    driver: bridge
+    name: indici

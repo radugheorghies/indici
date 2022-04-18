@@ -1,0 +1,14 @@
+body {
+    font-size: 0.75rem;
+}
+
+table.floatThead-table {
+    border-top: none;
+    border-bottom: none;
+    background-color: #FFF;
+}
+
+.table-container {
+    text-align: center;
+    vertical-align: middle;
+}
