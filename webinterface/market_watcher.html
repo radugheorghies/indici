@@ -32,10 +32,11 @@
                         <table class="table table-bordered">
                             <thead class="table-active">
                                 <tr class="table-info">
-                                    <th>Paritate</th>
-                                    <th>Pondere</th>
-                                    <th>Raport</th>
-                                    <th>Pret</th>
+                                    <th scope="col" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Paritate</th>
+                                    <th scope="col" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Pondere</th>
+                                    <th scope="col" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Raport</th>
+                                    <th scope="col" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Pret</th>
+                                    <th scope="col" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Indice</th>
                                 </tr>
                             </thead>
                             
@@ -45,6 +46,7 @@
                                     <td>0,48</td>
                                     <td>0,0214942825208495</td>
                                     <td id="BTCUSDT" class="alert alert-danger" style="font-weight: bold"></td>
+                                    <td rowspan="4" id="indice" style="font-weight: bold"></td>
                                 </tr>
                                 <tr>
                                     <td class="alert alert-warning">ETH USDT</td>
@@ -73,30 +75,69 @@
 
 
             <div class="row">
-                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                    <table class="table table-bordered">
-                        <thead class="table-active">
-                            <tr class="table-info">
-                                <th>Pret Indice</th>
-                            </tr>
-                        </thead>
-                        
-                        <tbody>
-                            <tr>
-                                <td id="indice" style="font-weight: bold"></td>
-                            </tr>
-                        </tbody>
-                        
-                    </table>
-                </div>
-                <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <fieldset class="text-center">
                         <legend><u>Candlesticks</u></legend>
                     </fieldset>
-                    <div class="dojichart" id="mychart">
-                        <div class="region" data-name="price"></div>
-                        <div class="region" data-name="volume"></div>
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <fieldset class="text-center">
+                                <p><strong>INDICE</strong>
+                            </fieldset>
+                            <div class="dojichart" id="mychart">
+                                <div class="region" data-name="price"></div>
+                                <div class="region" data-name="volume"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <fieldset class="text-center">
+                                        <p><strong>BTC USDT</strong>
+                                    </fieldset>
+                                    <div class="dojichart" id="mychart1">
+                                        <div class="region" data-name="price"></div>
+                                        <div class="region" data-name="volume"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <fieldset class="text-center">
+                                        <p><strong>ETH USDT</strong>
+                                    </fieldset>
+                                    <div class="dojichart" id="mychart2">
+                                        <div class="region" data-name="price"></div>
+                                        <div class="region" data-name="volume"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <fieldset class="text-center">
+                                        <p><strong>SOL USDT</strong>
+                                    </fieldset>
+                                    <div class="dojichart" id="mychart3">
+                                        <div class="region" data-name="price"></div>
+                                        <div class="region" data-name="volume"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <fieldset class="text-center">
+                                        <p><strong>DOGE USDT</strong>
+                                    </fieldset>
+                                    <div class="dojichart" id="mychart4">
+                                        <div class="region" data-name="price"></div>
+                                        <div class="region" data-name="volume"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+
+                    
                 </div>
                
             </div>

@@ -7,6 +7,7 @@ import (
 	"moontrade/internal/ema"
 	"moontrade/internal/kline"
 	"moontrade/internal/trades"
+	"time"
 )
 
 // Comand send thru sockets
@@ -18,28 +19,34 @@ type Comand struct {
 
 func New() *Binance {
 	b := Binance{
-		TradesIDs: make(map[string]int64),
-		kLines:    make(map[string]map[string]map[int]*kline.List),
-		ema:       make(map[string]map[int]*ema.EWMA),
-		lastValue: make(map[string]float64),
+		TradesIDs:      make(map[string]int64),
+		kLines:         make(map[string]map[string]*kline.List),
+		indiceKLine:    make(map[string]*kline.List),
+		tmpKLine:       make(map[string]map[string]kline.KLineData),
+		tmpIndiceKLine: make(map[string]kline.KLineData),
+		ema:            make(map[string]map[int]*ema.EWMA),
+		lastValue:      make(map[string]float64),
+		lastKLineSent:  make(map[string]time.Time),
 	}
 
 	for _, pair := range pairs {
-		b.kLines[pair] = make(map[string]map[int]*kline.List)
+		b.kLines[pair] = make(map[string]*kline.List)
+		b.tmpKLine[pair] = make(map[string]kline.KLineData)
 		b.ema[pair] = make(map[int]*ema.EWMA)
 
 		for _, interval := range intervals {
-			b.kLines[pair][interval] = make(map[int]*kline.List)
-
-			for _, emaInterval := range emaIntervals {
-				b.kLines[pair][interval][emaInterval] = kline.New()
-				b.kLines[pair][interval][emaInterval].MaxLength = emaInterval + 2
-			}
+			b.kLines[pair][interval] = kline.New()
+			b.kLines[pair][interval].MaxLength = maxEmaIntervals + 2
 		}
 
 		for _, emaInterval := range emaIntervals {
 			b.ema[pair][emaInterval] = ema.New(emaInterval)
 		}
+	}
+
+	for _, interval := range intervals {
+		b.indiceKLine[interval] = kline.New()
+		b.indiceKLine[interval].MaxLength = maxEmaIntervals + 2
 	}
 
 	return &b
@@ -52,7 +59,6 @@ func (b *Binance) Run(ctx context.Context) {
 	defer b.ws.Close()
 	go b.listenForMessages()
 	<-wait
-
 }
 
 func (b *Binance) listenForMessages() {
@@ -124,11 +130,40 @@ func (b *Binance) prepareKLine(data []byte, pair, period string) {
 	if kLine, err := tmpKLine.ConvertToKLine(); err == nil {
 		if kLine.IsClosed {
 			log.Printf("kLine %s: %v \n", period, kLine)
-			for _, e := range emaIntervals {
-				b.kLines[pair][period][e].InsertValue(kLine)
-			}
+			//for _, e := range emaIntervals {
+			b.kLines[pair][period].InsertValue(kLine)
+			//}
 
 			b.processKLine(kLine)
+
+			b.sendDataToFrontend(pair, period, nil)
+		} else {
+			b.tmpKLine[pair][period] = kLine
+
+			timeDiff := time.Since(b.lastKLineSent[pair])
+			if timeDiff > 5*time.Second {
+				b.sendDataToFrontend(pair, period, &kLine)
+			}
+		}
+
+		// calculate indice kline
+		indiceKLineData := kline.KLineData{
+			IsClosed: true,
+		}
+
+		for _, pair := range pairs {
+			indiceKLineData.OpenPrice += b.tmpKLine[pair][period].OpenPrice * pondere[pair] * rap[pair]
+			indiceKLineData.ClosePrice += b.tmpKLine[pair][period].ClosePrice * pondere[pair] * rap[pair]
+			indiceKLineData.HighPrice += b.tmpKLine[pair][period].HighPrice * pondere[pair] * rap[pair]
+			indiceKLineData.LowPrice += b.tmpKLine[pair][period].LowPrice * pondere[pair] * rap[pair]
+			indiceKLineData.Volume += b.tmpKLine[pair][period].Volume * pondere[pair] * rap[pair]
+		}
+
+		b.tmpIndiceKLine[period] = indiceKLineData
+
+		timeDiff := time.Since(b.lastIndiceKLineSent)
+		if timeDiff > 5*time.Second {
+			b.sendIndiceDataToFrontend(period, &indiceKLineData)
 		}
 	}
 }

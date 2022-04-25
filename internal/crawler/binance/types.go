@@ -5,19 +5,20 @@ import (
 	"moontrade/internal/kline"
 	"moontrade/internal/wsc"
 	"sync"
+	"time"
 
-	nats "github.com/nats-io/nats.go"
 	"gopkg.in/jcelliott/turnpike.v2"
 )
 
 const (
-	wssURL       = "wss://stream.binance.com:9443"
-	aggTradeURL  = "stream?streams="
-	aggTrade     = "%s@aggTrade"
-	httpBaseURL  = "https://api.binance.com"
-	httpKLineURL = "/api/v3/klines"
-	realm        = "dataGateway"
-	wampURL      = "ws://wampserver:8087/"
+	wssURL          = "wss://stream.binance.com:9443"
+	aggTradeURL     = "stream?streams="
+	aggTrade        = "%s@aggTrade"
+	httpBaseURL     = "https://api.binance.com"
+	httpKLineURL    = "/api/v3/klines"
+	realm           = "dataGateway"
+	wampURL         = "ws://0.0.0.0:8087/"
+	maxEmaIntervals = 90
 )
 
 var (
@@ -41,16 +42,35 @@ var (
 )
 
 type Binance struct {
-	ws        *wsc.Wsc
-	nc        *nats.Conn // nats connection
-	wamp      *turnpike.Client
-	TradesIDs map[string]int64
-	kLines    map[string]map[string]map[int]*kline.List
-	ema       map[string]map[int]*ema.EWMA
-	lastValue map[string]float64
+	ws *wsc.Wsc
+	// nc        *nats.Conn // nats connection
+	wamp                *turnpike.Client
+	TradesIDs           map[string]int64
+	kLines              map[string]map[string]*kline.List
+	indiceKLine         map[string]*kline.List
+	tmpKLine            map[string]map[string]kline.KLineData
+	tmpIndiceKLine      map[string]kline.KLineData
+	ema                 map[string]map[int]*ema.EWMA
+	lastValue           map[string]float64
+	lastKLineSent       map[string]time.Time
+	lastIndiceKLineSent time.Time
 }
 
 type StreamData struct {
 	Stream string      `json:"stream"`
 	Data   interface{} `json:"data"`
+}
+
+type FrKLine struct {
+	T string
+	O float64
+	C float64
+	H float64
+	L float64
+	V float64
+}
+
+type FrontendPayload struct {
+	Data []FrKLine
+	Pair string
 }

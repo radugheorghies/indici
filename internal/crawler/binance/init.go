@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"strings"
 
-	nats "github.com/nats-io/nats.go"
 	"gopkg.in/jcelliott/turnpike.v2"
 )
 
@@ -42,13 +41,13 @@ func (b *Binance) initSocket() {
 	b.ws.Run()
 }
 
-func (b *Binance) initNatsConnection(url string) {
-	nc, err := nats.Connect("nats://nats:4222")
-	if err != nil {
-		log.Fatal("Could not connect to nats server:", err)
-	}
-	b.nc = nc
-}
+// func (b *Binance) initNatsConnection(url string) {
+// 	nc, err := nats.Connect("nats://nats:4222")
+// 	if err != nil {
+// 		log.Fatal("Could not connect to nats server:", err)
+// 	}
+// 	b.nc = nc
+// }
 
 func (b *Binance) getInitialKLines() {
 	for _, interval := range intervals {
@@ -57,6 +56,8 @@ func (b *Binance) getInitialKLines() {
 	}
 
 	wg.Wait()
+
+	b.calculateIniceKLine()
 }
 
 func (b *Binance) getInitialKLine(interval string) {
@@ -84,11 +85,12 @@ func (b *Binance) getInitialKLine(interval string) {
 
 		for _, v := range arrayResult {
 			if k, err := kline.ConvertArrayToKLine(v); err == nil {
-				for _, e := range emaIntervals {
-					b.kLines[pair][interval][e].InsertValue(k)
-				}
+				b.kLines[pair][interval].InsertValue(k)
 			}
 		}
+
+		// now we read the data to prepare the frontend payload
+		b.sendDataToFrontend(pair, interval, nil)
 	}
 
 	wg.Done()
